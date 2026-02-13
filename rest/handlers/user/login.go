@@ -23,7 +23,7 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 	var reqLogin ReqLogin
 
 	decode := json.NewDecoder(r.Body)
-	err := decode.Decode(reqLogin)
+	err := decode.Decode(&reqLogin)
 
 	if err != nil {
 		utils.SendError(w, false, err.Error(), nil, http.StatusBadRequest)
