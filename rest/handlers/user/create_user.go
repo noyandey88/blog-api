@@ -28,11 +28,18 @@ func (h *Handler) CreateUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	hashedPassword, err := utils.HashPassword(newUser.Password)
+
+	if err != nil {
+		utils.SendError(w, false, err.Error(), nil, http.StatusInternalServerError)
+		return
+	}
+
 	user, err := h.svc.Create(domain.User{
 		FirstName: newUser.FirstName,
 		LastName:  newUser.LastName,
 		Email:     newUser.Email,
-		Password:  newUser.Password,
+		Password:  hashedPassword,
 		Role:      newUser.Role,
 	})
 
