@@ -14,7 +14,6 @@ type CreateUserRequest struct {
 	FirstName string `json:"firstName"`
 	LastName  string `json:"lastName"`
 	Username  string `json:"username"`
-	Role      string `json:"role"`
 }
 
 func (h *Handler) CreateUser(w http.ResponseWriter, r *http.Request) {
@@ -40,7 +39,7 @@ func (h *Handler) CreateUser(w http.ResponseWriter, r *http.Request) {
 		LastName:  newUser.LastName,
 		Email:     newUser.Email,
 		Password:  hashedPassword,
-		Role:      newUser.Role,
+		Username:  newUser.Username,
 	})
 
 	if err != nil {
