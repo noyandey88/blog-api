@@ -24,19 +24,22 @@ func NewUserRepo(db *sqlx.DB) UserRepo {
 }
 
 func (r *userRepo) Create(user domain.User) (*domain.User, error) {
-	query := `INSERT INTO users (
-		email,
-		password,
-		first_name,
-		last_name,
-		username
-	) VALUES (
-		:email,
-		:password,
-		:first_name,
-		:last_name,
-		:username,
-	) RETURNING id`
+	query := `
+		INSERT INTO users (
+			email,
+			password,
+			first_name,
+			last_name,
+			username
+		)
+		VALUES (
+			:email,
+			:password,
+			:first_name,
+			:last_name,
+			:username
+		) RETURNING id
+	`
 
 	var userId int
 	rows, err := r.db.NamedQuery(query, user)

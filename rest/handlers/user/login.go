@@ -38,7 +38,7 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if user == nil {
-		utils.SendError(w, false, "Invalid email or password", nil, http.StatusUnauthorized)
+		utils.SendError(w, false, "Invalid email or password", nil, http.StatusBadRequest)
 		return
 	}
 

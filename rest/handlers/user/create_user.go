@@ -14,7 +14,7 @@ type CreateUserRequest struct {
 	FirstName string `json:"firstName"`
 	LastName  string `json:"lastName"`
 	Username  string `json:"username"`
-	Role      string `json:"role" default:"user"`
+	Role      string `json:"role"`
 }
 
 func (h *Handler) CreateUser(w http.ResponseWriter, r *http.Request) {
@@ -25,6 +25,7 @@ func (h *Handler) CreateUser(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		utils.SendError(w, false, err.Error(), nil, http.StatusBadRequest)
+		return
 	}
 
 	user, err := h.svc.Create(domain.User{
@@ -37,6 +38,7 @@ func (h *Handler) CreateUser(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		utils.SendError(w, false, err.Error(), nil, http.StatusInternalServerError)
+		return
 	}
 
 	utils.SendData(w, true, "User created successfully", user, http.StatusCreated)
