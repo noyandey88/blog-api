@@ -55,7 +55,7 @@ func (r *userRepo) Create(user domain.User) (*domain.User, error) {
 
 }
 
-func (r *userRepo) Find(email, password string) (*domain.User, error) {
+func (r *userRepo) FindByEmail(email string) (*domain.User, error) {
 	var user domain.User
 
 	query := `
@@ -67,9 +67,9 @@ func (r *userRepo) Find(email, password string) (*domain.User, error) {
 			last_name,
 			username
 		FROM users
-		WHERE email = $1 AND password = $2`
+		WHERE email = $1`
 
-	err := r.db.Get(&user, query, email, password)
+	err := r.db.Get(&user, query, email)
 	if err != nil {
 		if sql.ErrNoRows == err {
 			return nil, nil
