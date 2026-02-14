@@ -53,23 +53,6 @@ func (r *userRepo) Create(user domain.User) (*domain.User, error) {
 
 	return &user, nil
 
-	// if err != nil {
-	// 	fmt.Println(err)
-	// 	return nil, err
-	// }
-
-	// defer rows.Close()
-
-	// if rows.Next() {
-	// 	err := rows.StructScan(&user)
-	// 	if err != nil {
-	// 		fmt.Println(err)
-	// 		return nil, err
-	// 	}
-	// }
-
-	// user.ID = userId
-	// return &user, nil
 }
 
 func (r *userRepo) Find(email, password string) (*domain.User, error) {
