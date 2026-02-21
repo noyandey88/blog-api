@@ -20,7 +20,7 @@ func (h *Handler) RegisterRoutes(mux *http.ServeMux, manager *middlewares.Manage
 	))
 
 	mux.Handle("PUT /categories/update/{id}", manager.With(
-		http.HandlerFunc(),
+		http.HandlerFunc(h.UpdateCategory),
 	))
 
 	mux.Handle("DELETE /categories/delete/{id}", manager.With(
