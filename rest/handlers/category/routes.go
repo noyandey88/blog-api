@@ -24,6 +24,6 @@ func (h *Handler) RegisterRoutes(mux *http.ServeMux, manager *middlewares.Manage
 	))
 
 	mux.Handle("DELETE /categories/delete/{id}", manager.With(
-		http.HandlerFunc(),
+		http.HandlerFunc(h.DeleteCategory),
 	))
 }
