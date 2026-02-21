@@ -6,19 +6,22 @@ import (
 	"os"
 
 	"github.com/noyandey88/blog-api/config"
+	"github.com/noyandey88/blog-api/rest/handlers/category"
 	"github.com/noyandey88/blog-api/rest/handlers/user"
 	"github.com/noyandey88/blog-api/rest/middlewares"
 )
 
 type Server struct {
-	cfg         *config.Config
-	userHandler *user.Handler
+	cfg             *config.Config
+	userHandler     *user.Handler
+	categoryHandler *category.Handler
 }
 
-func NewServer(cfg *config.Config, userHandler *user.Handler) *Server {
+func NewServer(cfg *config.Config, userHandler *user.Handler, categoryHandler *category.Handler) *Server {
 	return &Server{
-		cfg:         cfg,
-		userHandler: userHandler,
+		cfg:             cfg,
+		userHandler:     userHandler,
+		categoryHandler: categoryHandler,
 	}
 }
 
@@ -34,6 +37,7 @@ func (server *Server) Start() {
 	wrappedMux := manager.WrapMux(mux)
 
 	server.userHandler.RegisterRoutes(mux, manager)
+	server.categoryHandler.RegisterRoutes(mux, manager)
 
 	addr := fmt.Sprintf(":%d", server.cfg.HttpPort)
 

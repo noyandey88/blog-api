@@ -6,9 +6,11 @@ import (
 
 	"github.com/noyandey88/blog-api/config"
 	"github.com/noyandey88/blog-api/infra/db"
+	"github.com/noyandey88/blog-api/internal/category"
 	"github.com/noyandey88/blog-api/internal/user"
 	"github.com/noyandey88/blog-api/repo"
 	"github.com/noyandey88/blog-api/rest"
+	categoryHandler "github.com/noyandey88/blog-api/rest/handlers/category"
 	userHandler "github.com/noyandey88/blog-api/rest/handlers/user"
 )
 
@@ -29,17 +31,24 @@ func Serve() {
 
 	// repos
 	userRepo := repo.NewUserRepo(dbCon)
+	categoryRepo := repo.NewCategoryRepo(dbCon)
 
 	// domains
 	userService := user.NewService(userRepo)
+	categoryService := category.NewService(categoryRepo)
 
 	//middlewares
 	// middlewares := middlewares.NewMiddlewares(cfg)
 
 	// handlers
 	userHandler := userHandler.NewHandler(userService, cfg)
+	categoryHandler := categoryHandler.NewHandler(categoryService, cfg)
 
-	server := rest.NewServer(cfg, userHandler)
+	server := rest.NewServer(
+		cfg,
+		userHandler,
+		categoryHandler,
+	)
 
 	server.Start()
 }

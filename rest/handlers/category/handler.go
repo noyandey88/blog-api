@@ -7,7 +7,7 @@ type Handler struct {
 	svc Service
 }
 
-func NewHandler(cfg *config.Config, svc Service) *Handler {
+func NewHandler(svc Service, cfg *config.Config) *Handler {
 	return &Handler{
 		cfg: cfg,
 		svc: svc,
