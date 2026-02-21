@@ -14,6 +14,6 @@ func (h *Handler) GetCategories(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	utils.SendData(w, true, "Data loaded successfully", categoryList, http.StatusOK)
+	utils.SendData(w, true, "Data retrieved successfully", categoryList, http.StatusOK)
 
 }
