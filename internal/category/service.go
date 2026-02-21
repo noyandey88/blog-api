@@ -27,8 +27,8 @@ func (svc *service) Create(category domain.Category) (*domain.Category, error) {
 
 }
 
-func (svc *service) FindAll() (*[]domain.Category, error) {
-	categories, err := svc.categoryRepo.FindAll()
+func (svc *service) List(page, limit int64) ([]*domain.Category, error) {
+	categories, err := svc.categoryRepo.List(page, limit)
 
 	if err != nil {
 		return nil, err
@@ -41,8 +41,8 @@ func (svc *service) FindAll() (*[]domain.Category, error) {
 	return categories, nil
 }
 
-func (svc *service) FindById(id int) (*domain.Category, error) {
-	category, err := svc.categoryRepo.FindById(id)
+func (svc *service) Get(id int) (*domain.Category, error) {
+	category, err := svc.categoryRepo.Get(id)
 
 	if err != nil {
 		return nil, err
