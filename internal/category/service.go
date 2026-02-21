@@ -27,8 +27,8 @@ func (svc *service) Create(category domain.Category) (*domain.Category, error) {
 
 }
 
-func (svc *service) List(page, limit int64) ([]*domain.Category, error) {
-	categories, err := svc.categoryRepo.List(page, limit)
+func (svc *service) List() ([]*domain.Category, error) {
+	categories, err := svc.categoryRepo.List()
 
 	if err != nil {
 		return nil, err

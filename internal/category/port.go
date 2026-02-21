@@ -11,7 +11,7 @@ type Service interface {
 
 type CategoryRepo interface {
 	Create(category domain.Category) (*domain.Category, error)
-	List(page, limit int64) ([]*domain.Category, error)
+	List() ([]*domain.Category, error)
 	Get(id int) (*domain.Category, error)
 	Update(category domain.Category) (*domain.Category, error)
 	Delete(id int) error
