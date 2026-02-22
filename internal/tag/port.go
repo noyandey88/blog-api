@@ -10,9 +10,9 @@ type Service interface {
 }
 
 type TagRepo interface {
-	Create(tag *domain.Tag) (*domain.Tag, error)
+	Create(tag domain.Tag) (*domain.Tag, error)
 	List() ([]*domain.Tag, error)
 	Get(id int) (*domain.Tag, error)
-	Update(id int, tag *domain.Tag) (*domain.Tag, error)
+	Update(tag domain.Tag) (*domain.Tag, error)
 	Delete(id int) error
 }
