@@ -12,7 +12,6 @@ import (
 type UpdateCategoryReq struct {
 	ID          int    `json:"id"`
 	Name        string `json:"name"`
-	Slug        string `json:"slug"`
 	Description string `json:"description"`
 }
 
@@ -53,7 +52,6 @@ func (h *Handler) UpdateCategory(w http.ResponseWriter, r *http.Request) {
 	updatedCategory, err := h.svc.Update(domain.Category{
 		ID:          cId,
 		Name:        req.Name,
-		Slug:        req.Slug,
 		Description: req.Description,
 	})
 

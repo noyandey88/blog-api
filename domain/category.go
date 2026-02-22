@@ -6,4 +6,5 @@ type Category struct {
 	Slug        string `json:"slug" db:"slug"`
 	Description string `json:"description" db:"description"`
 	CreatedAt   int64  `json:"createdAt" db:"created_at"`
+	UpdatedAt   int64  `json:"updatedAt" db:"updated_at"`
 }

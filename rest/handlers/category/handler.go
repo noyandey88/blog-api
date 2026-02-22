@@ -1,15 +1,20 @@
 package category
 
-import "github.com/noyandey88/blog-api/config"
+import (
+	"github.com/noyandey88/blog-api/rest/middlewares"
+)
 
 type Handler struct {
-	cfg *config.Config
-	svc Service
+	middlewares *middlewares.Middlewares
+	svc         Service
 }
 
-func NewHandler(svc Service, cfg *config.Config) *Handler {
+func NewHandler(
+	middlewares *middlewares.Middlewares,
+	svc Service,
+) *Handler {
 	return &Handler{
-		cfg: cfg,
-		svc: svc,
+		middlewares: middlewares,
+		svc:         svc,
 	}
 }

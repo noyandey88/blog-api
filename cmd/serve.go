@@ -12,6 +12,7 @@ import (
 	"github.com/noyandey88/blog-api/rest"
 	categoryHandler "github.com/noyandey88/blog-api/rest/handlers/category"
 	userHandler "github.com/noyandey88/blog-api/rest/handlers/user"
+	"github.com/noyandey88/blog-api/rest/middlewares"
 )
 
 func Serve() {
@@ -38,11 +39,11 @@ func Serve() {
 	categoryService := category.NewService(categoryRepo)
 
 	//middlewares
-	// middlewares := middlewares.NewMiddlewares(cfg)
+	middlewares := middlewares.NewMiddlewares(cfg)
 
 	// handlers
 	userHandler := userHandler.NewHandler(userService, cfg)
-	categoryHandler := categoryHandler.NewHandler(categoryService, cfg)
+	categoryHandler := categoryHandler.NewHandler(middlewares, categoryService)
 
 	server := rest.NewServer(
 		cfg,

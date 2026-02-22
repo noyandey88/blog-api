@@ -7,12 +7,13 @@ import (
 )
 
 func (h *Handler) RegisterRoutes(mux *http.ServeMux, manager *middlewares.Manager) {
-	mux.Handle("GET /categories/get", manager.With(
+	mux.Handle("GET /categories/all", manager.With(
 		http.HandlerFunc(h.GetCategories),
 	))
 
 	mux.Handle("POST /categories/create", manager.With(
 		http.HandlerFunc(h.CreateCategory),
+		h.middlewares.AuthenticateJWT,
 	))
 
 	mux.Handle("GET /categories/get/{id}", manager.With(
@@ -21,9 +22,11 @@ func (h *Handler) RegisterRoutes(mux *http.ServeMux, manager *middlewares.Manage
 
 	mux.Handle("PUT /categories/update/{id}", manager.With(
 		http.HandlerFunc(h.UpdateCategory),
+		h.middlewares.AuthenticateJWT,
 	))
 
 	mux.Handle("DELETE /categories/delete/{id}", manager.With(
 		http.HandlerFunc(h.DeleteCategory),
+		h.middlewares.AuthenticateJWT,
 	))
 }

@@ -29,11 +29,14 @@ func (r *categoryRepo) Create(category domain.Category) (*domain.Category, error
 			$1,
 			$2,
 			$3
-		) RETURNING id;
-	`
+		) RETURNING id, created_at, updated_at;`
 
 	row := r.db.QueryRow(query, category.Name, category.Slug, category.Description)
-	err := row.Scan(&category.ID)
+	err := row.Scan(
+		&category.ID,
+		&category.CreatedAt,
+		&category.UpdatedAt,
+	)
 
 	if err != nil {
 		return nil, err
@@ -43,7 +46,16 @@ func (r *categoryRepo) Create(category domain.Category) (*domain.Category, error
 }
 
 func (r *categoryRepo) List() ([]*domain.Category, error) {
-	query := `SELECT id, name, slug, description FROM categories;`
+	query := `
+		SELECT
+			id,
+			name,
+			slug,
+			description,
+			created_at,
+			updated_at
+		FROM categories;
+`
 
 	rows, err := r.db.Query(query)
 	if err != nil {
@@ -55,7 +67,7 @@ func (r *categoryRepo) List() ([]*domain.Category, error) {
 
 	for rows.Next() {
 		var category domain.Category
-		err := rows.Scan(&category.ID, &category.Name, &category.Slug, &category.Description)
+		err := rows.Scan(&category.ID, &category.Name, &category.Slug, &category.Description, &category.CreatedAt, &category.UpdatedAt)
 		if err != nil {
 			return nil, err
 		}
@@ -66,12 +78,11 @@ func (r *categoryRepo) List() ([]*domain.Category, error) {
 }
 
 func (r *categoryRepo) Get(id int) (*domain.Category, error) {
-	query := `SELECT id, name, slug, description FROM categories WHERE id = $1;`
+	query := `SELECT * FROM categories WHERE id = $1;`
 
 	row := r.db.QueryRow(query, id)
 	var category domain.Category
-	err := row.Scan(&category.ID, &category.Name, &category.Slug, &category.Description)
-
+	err := row.Scan(&category.ID, &category.Name, &category.Slug, &category.Description, &category.CreatedAt, &category.UpdatedAt)
 	if err != nil {
 		return nil, err
 	}
@@ -80,10 +91,19 @@ func (r *categoryRepo) Get(id int) (*domain.Category, error) {
 }
 
 func (r *categoryRepo) Update(category domain.Category) (*domain.Category, error) {
-	query := `UPDATE categories SET name = $1, slug = $2, description = $3 WHERE id = $4 RETURNING id;`
+	query := `UPDATE categories SET
+			name = $1,
+			description = $2
+			WHERE id = $3
+			RETURNING id,
+			name,
+			slug,
+			description,
+			created_at,
+			updated_at;`
 
-	row := r.db.QueryRow(query, category.Name, category.Slug, category.Description, category.ID)
-	err := row.Scan(&category.ID)
+	row := r.db.QueryRow(query, category.Name, category.Description, category.ID)
+	err := row.Scan(&category.ID, &category.Name, &category.Slug, &category.Description, &category.CreatedAt, &category.UpdatedAt)
 
 	if err != nil {
 		return nil, err
