@@ -7,6 +7,7 @@ import (
 
 	"github.com/noyandey88/blog-api/config"
 	"github.com/noyandey88/blog-api/rest/handlers/category"
+	"github.com/noyandey88/blog-api/rest/handlers/tag"
 	"github.com/noyandey88/blog-api/rest/handlers/user"
 	"github.com/noyandey88/blog-api/rest/middlewares"
 )
@@ -15,13 +16,20 @@ type Server struct {
 	cfg             *config.Config
 	userHandler     *user.Handler
 	categoryHandler *category.Handler
+	tagHandler      *tag.Handler
 }
 
-func NewServer(cfg *config.Config, userHandler *user.Handler, categoryHandler *category.Handler) *Server {
+func NewServer(
+	cfg *config.Config,
+	userHandler *user.Handler,
+	categoryHandler *category.Handler,
+	tagHandler *tag.Handler,
+) *Server {
 	return &Server{
 		cfg:             cfg,
 		userHandler:     userHandler,
 		categoryHandler: categoryHandler,
+		tagHandler:      tagHandler,
 	}
 }
 
