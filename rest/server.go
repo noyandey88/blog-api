@@ -46,6 +46,7 @@ func (server *Server) Start() {
 
 	server.userHandler.RegisterRoutes(mux, manager)
 	server.categoryHandler.RegisterRoutes(mux, manager)
+	server.tagHandler.RegisterRoutes(mux, manager)
 
 	addr := fmt.Sprintf(":%d", server.cfg.HttpPort)
 

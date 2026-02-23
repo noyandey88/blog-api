@@ -23,7 +23,7 @@ func NewTagRepo(db *sqlx.DB) TagRepo {
 func (r *tagRepo) Create(tag domain.Tag) (*domain.Tag, error) {
 	query := `INSERT INTO tags (
 			name,
-			slug,
+			slug
 		) VALUES(
 			$1,
 			$2
@@ -89,7 +89,7 @@ func (r *tagRepo) Get(id int) (*domain.Tag, error) {
 
 func (r *tagRepo) Update(tag domain.Tag) (*domain.Tag, error) {
 	query := `UPDATE tags SET
-			name = $1,
+			name = $1
 			WHERE id = $2
 			RETURNING id,
 			name,

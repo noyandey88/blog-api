@@ -20,7 +20,7 @@ func (h *Handler) GetTag(w http.ResponseWriter, r *http.Request) {
 	tag, err := h.svc.Get(cId)
 
 	if err != nil {
-		utils.SendError(w, false, err.Error(), nil, http.StatusInternalServerError)
+		utils.SendError(w, false, err.Error(), nil, http.StatusNotFound)
 		return
 	}
 
