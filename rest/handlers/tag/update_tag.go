@@ -3,7 +3,7 @@ package tag
 import (
 	"encoding/json"
 	"net/http"
-	"strconv"
+	"time"
 
 	"github.com/noyandey88/blog-api/domain"
 	"github.com/noyandey88/blog-api/utils"
@@ -15,16 +15,17 @@ type UpdateTagReq struct {
 }
 
 func (h *Handler) UpdateTag(w http.ResponseWriter, r *http.Request) {
-	tagId := r.PathValue("id")
+	var req UpdateTagReq
 
-	cId, err := strconv.Atoi(tagId)
+	decoder := json.NewDecoder(r.Body)
+	err := decoder.Decode(&req)
 
 	if err != nil {
 		utils.SendError(w, false, err.Error(), nil, http.StatusBadRequest)
 		return
 	}
 
-	tag, err := h.svc.Get(cId)
+	tag, err := h.svc.Get(req.ID)
 
 	if err != nil {
 		utils.SendError(w, false, err.Error(), nil, http.StatusInternalServerError)
@@ -36,21 +37,10 @@ func (h *Handler) UpdateTag(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var req UpdateTagReq
-
-	decoder := json.NewDecoder(r.Body)
-	err = decoder.Decode(&req)
-
-	if err != nil {
-		utils.SendError(w, false, err.Error(), nil, http.StatusBadRequest)
-		return
-	}
-
-	req.ID = cId
-
 	updatedTag, err := h.svc.Update(domain.Tag{
-		ID:   cId,
-		Name: req.Name,
+		ID:        req.ID,
+		Name:      req.Name,
+		UpdatedAt: time.Now().Unix(),
 	})
 
 	if err != nil {

@@ -20,6 +20,6 @@ type Post struct {
 	Status      PostStatus `db:"status" json:"status"`
 	ViewCount   int        `db:"view_count" json:"viewCount"`
 	PublishedAt *int64     `db:"published_at" json:"publishedAt,omitempty"`
-	CreatedAt   int64      `json:"createdAt" db:"created_at"`
-	UpdatedAt   int64      `json:"updatedAt" db:"updated_at"`
+	CreatedAt   int64      `db:"created_at" json:"createdAt"`
+	UpdatedAt   int64      `db:"updated_at" json:"updatedAt"`
 }

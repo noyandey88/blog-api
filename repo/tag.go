@@ -89,15 +89,16 @@ func (r *tagRepo) Get(id int) (*domain.Tag, error) {
 
 func (r *tagRepo) Update(tag domain.Tag) (*domain.Tag, error) {
 	query := `UPDATE tags SET
-			name = $1
-			WHERE id = $2
+			name = $1,
+			updated_at = $2
+			WHERE id = $3
 			RETURNING id,
 			name,
 			slug,
 			created_at,
 			updated_at;`
 
-	row := r.db.QueryRow(query, tag.Name, tag.ID)
+	row := r.db.QueryRow(query, tag.Name, tag.UpdatedAt, tag.ID)
 	err := row.Scan(&tag.ID, &tag.Name, &tag.Slug, &tag.CreatedAt, &tag.UpdatedAt)
 
 	if err != nil {

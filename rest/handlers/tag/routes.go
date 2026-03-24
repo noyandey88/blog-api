@@ -20,7 +20,7 @@ func (h *Handler) RegisterRoutes(mux *http.ServeMux, manager *middlewares.Manage
 		http.HandlerFunc(h.GetTag),
 	))
 
-	mux.Handle("PUT /tags/update/{id}", manager.With(
+	mux.Handle("PUT /tags/update", manager.With(
 		http.HandlerFunc(h.UpdateTag),
 		h.middlewares.AuthenticateJWT,
 	))

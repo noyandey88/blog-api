@@ -93,8 +93,9 @@ func (r *categoryRepo) Get(id int) (*domain.Category, error) {
 func (r *categoryRepo) Update(category domain.Category) (*domain.Category, error) {
 	query := `UPDATE categories SET
 			name = $1,
-			description = $2
-			WHERE id = $3
+			description = $2,
+			updated_at = $3
+			WHERE id = $4
 			RETURNING id,
 			name,
 			slug,
@@ -102,7 +103,7 @@ func (r *categoryRepo) Update(category domain.Category) (*domain.Category, error
 			created_at,
 			updated_at;`
 
-	row := r.db.QueryRow(query, category.Name, category.Description, category.ID)
+	row := r.db.QueryRow(query, category.Name, category.Description, category.UpdatedAt, category.ID)
 	err := row.Scan(&category.ID, &category.Name, &category.Slug, &category.Description, &category.CreatedAt, &category.UpdatedAt)
 
 	if err != nil {

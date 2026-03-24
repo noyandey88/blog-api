@@ -20,7 +20,7 @@ func (h *Handler) RegisterRoutes(mux *http.ServeMux, manager *middlewares.Manage
 		http.HandlerFunc(h.GetCategory),
 	))
 
-	mux.Handle("PUT /categories/update/{id}", manager.With(
+	mux.Handle("PUT /categories/update", manager.With(
 		http.HandlerFunc(h.UpdateCategory),
 		h.middlewares.AuthenticateJWT,
 	))
