@@ -1,6 +1,11 @@
 package user
 
-import "github.com/noyandey88/blog-api/domain"
+import (
+	"errors"
+
+	"github.com/noyandey88/blog-api/domain"
+	"github.com/noyandey88/blog-api/utils"
+)
 
 type service struct {
 	userRepo UserRepo
@@ -27,7 +32,7 @@ func (svc *service) Create(user domain.User) (*domain.User, error) {
 }
 
 func (svc *service) Find(email string, password string) (*domain.User, error) {
-	usr, err := svc.userRepo.Find(email, password)
+	usr, err := svc.userRepo.FindByEmail(email)
 
 	if err != nil {
 		return nil, err
@@ -35,6 +40,12 @@ func (svc *service) Find(email string, password string) (*domain.User, error) {
 
 	if usr == nil {
 		return nil, nil
+	}
+
+	err = utils.ComparePassword(usr.Password, password)
+
+	if err != nil {
+		return nil, errors.New("Invalid credentials")
 	}
 
 	return usr, nil

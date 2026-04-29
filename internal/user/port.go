@@ -11,5 +11,5 @@ type Service interface {
 
 type UserRepo interface {
 	Create(user domain.User) (*domain.User, error)
-	Find(email string, password string) (*domain.User, error)
+	FindByEmail(email string) (*domain.User, error)
 }

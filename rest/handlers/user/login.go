@@ -33,12 +33,12 @@ func (h *Handler) Login(w http.ResponseWriter, r *http.Request) {
 	user, err := h.svc.Find(reqLogin.Email, reqLogin.Password)
 
 	if err != nil {
-		utils.SendError(w, false, err.Error(), nil, http.StatusInternalServerError)
+		utils.SendError(w, false, err.Error(), nil, http.StatusBadRequest)
 		return
 	}
 
 	if user == nil {
-		utils.SendError(w, false, "Invalid email or password", nil, http.StatusBadRequest)
+		utils.SendError(w, false, "User not found!", nil, http.StatusNotFound)
 		return
 	}
 
